@@ -41,3 +41,7 @@ const liidaLyhemaltPesas = (num1) => (num2) => num1 + num2;
 console.log(liidaLyhemaltPesas(6)(7));
 
 // #7
+const tere = (nimi = "World") => `Hello ${nimi}`;
+
+console.log(tere());
+console.log(tere("Mari"));
