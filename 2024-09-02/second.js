@@ -1,11 +1,11 @@
 // #1
-const massiiv = [1,2,3,4,5,6,7,"test"];
+const massiiv1 = [1,2,3,4,5,6,7,"test"];
 
 function leiaIndeks(hulk, number) {
     return hulk.indexOf(number);    
 }
 
-console.log(leiaIndeks(massiiv, 4));
+console.log(leiaIndeks(massiiv1, 4));
 
 // #2
 function liidaMeetodiga(num1, num2){
@@ -45,3 +45,18 @@ const tere = (nimi = "World") => `Hello ${nimi}`;
 
 console.log(tere());
 console.log(tere("Mari"));
+
+// #8
+const massiiv2 = [1,2,3,4,5];
+const liidaViis = (hulk) => hulk.map(i => i + 5);
+
+console.log(liidaViis(massiiv2));
+
+// #9
+const kolmParameetrit = massiiv2.map((element, index, array) => {
+    // `Element: ${element}; indeks: ${index}; massiiv: ${array}`;
+    const added = 1 + 2;
+    return element + 5;
+});
+
+console.log( { kolmParameetrit: kolmParameetrit } );
