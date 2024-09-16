@@ -1,62 +1,6 @@
 // rafce
 import React, { useState } from "react";
 
-/*
-const Counter = () => {
-  const [counter, setCounter] = useState(0);
-  // const [counter, setCounter] = React.useState(0);
-
-  return (
-    <>
-        <h1>{counter}</h1>
-        <button onClick={() => setCounter(counter + 1)}>+1</button>
-    </>
-  );
-}
- */
-
-/*
-const Counter = () => {
-    const [counter, setCounter] = useState(0);
-
-    const modifyCounter = () => setCounter(counter + 1);
-
-    return (
-      <>
-          <h1>{counter}</h1>
-          <p>
-            <button onClick={modifyCounter}>+1</button>
-          </p>
-          <p>
-            <button onClick={() => setTimeout(() => modifyCounter(), 2000)}>async +1</button>
-          </p>
-      </>
-    );
-}
- */
-
-/*
-const Counter = () => {
-  const [counter, setCounter] = useState(0)
-
-  const modifyCounter = () => setCounter(prevCounter => prevCounter + 1)
-
-  return (
-    <>
-      <h1>{counter}</h1>
-      <div>
-        <button onClick={modifyCounter}>+1</button>
-      </div>
-      <div>
-        <button onClick={() => setTimeout(() => modifyCounter(), 2000)}>
-          async +1
-        </button>
-      </div>
-    </>
-  )
-}
- */
-
 const Counter = () => {
   const [counter, setCounter] = useState(0);
 
@@ -64,18 +8,21 @@ const Counter = () => {
 
   return (
     <>
-      <h1>{counter}</h1>
+      <div className="App-header App-emph">{counter}</div>
 
-      <p>
+      <p className="App-paragraph">
         {[+1, +5, +50, -1, -5, -50].map(element => (
-          <button onClick={() => modifyCounter(element)}>sync {element}</button>
+          <>
+            <button className="App-button" onClick={() => modifyCounter(element)}>sync <span className="App-emph">{(element > 0 && "+") + element}</span></button>
+            <span>&nbsp;</span>
+          </>
         ))}
       </p>
-      <p>
-        <button onClick={() => setTimeout(() => modifyCounter(1), 2000)}>async +1</button>
+      <p className="App-paragraph">
+        <button className="App-button" onClick={() => setTimeout(() => modifyCounter(1), 2000)}>async <span className="App-emph">+1</span></button>
       </p>
     </>
   )
-}
+};
 
 export default Counter;

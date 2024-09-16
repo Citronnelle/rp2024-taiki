@@ -1,29 +1,11 @@
-import React from "react"
-
-/*
-const Name = () => {
-    return <h1>Miski Nimi</h1>
-}
- */
-
-/*
-const Name = (props) => {
-    if(props.title) {
-        return <h1>{ {props.title} }</h1>;
-    } else if(props.name) {
-        return <h1>{ props.name }</h1>;
-    } else {
-        return <h1>Miski Nimi</h1>;
-    }
-}
- */
+import React from "react";
 
 const Name = ({ name }) => {
   if (name) {
-    return <h1>Hello {name}</h1>
+    return <div className="App-div">Hello {name}</div>
   } else {
-    return <h1>Hello World</h1>
+    return <div className="App-div">Hello World</div>
   }
-}
+};
 
-export default Name
+export default Name;

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 const PropDrilling = () => {
-  const [weather, setWeather] = useState("🌞");
+  const [weather, setWeather] = useState("🌦️");
 
   return <Europe weather={weather} />;
 };

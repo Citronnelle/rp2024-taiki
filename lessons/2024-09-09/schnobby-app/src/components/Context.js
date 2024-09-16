@@ -4,7 +4,7 @@ import { createContext, useState, useContext } from "react";
 export const WeatherContext = createContext(null);
 
 const Context = () => {
-  const [weather, setWeather] = useState("🌞");
+  const [weather, setWeather] = useState("☀️");
 
   const changeWeather = () => setWeather("🌧️");
 

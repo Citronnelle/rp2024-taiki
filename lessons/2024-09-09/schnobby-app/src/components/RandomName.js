@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const RandomName = () => {
   const nimeMassiiv = [
@@ -11,7 +11,7 @@ const RandomName = () => {
     "Juuli",
     "August",
   ]
-  return nimeMassiiv[Math.round(Math.random() * 8) % 8]
-}
+  return nimeMassiiv[Math.round(Math.random() * 8) % 8];
+;}
 
-export default RandomName
+export default RandomName;

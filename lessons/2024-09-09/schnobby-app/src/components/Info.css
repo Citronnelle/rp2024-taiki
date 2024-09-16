@@ -1,0 +1,24 @@
+.Info-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.Info-item {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 5px;
+    padding: 5px;
+    height: 100%;
+}
+
+.Info-item-right {
+    align-self: flex-end;
+}
+
+.Info-item input, .Info-item textarea {
+    width: 95%;
+    margin-bottom: 10px;
+}
