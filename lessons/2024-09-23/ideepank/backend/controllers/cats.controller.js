@@ -1,20 +1,20 @@
 const cats = [
   {
-    id: 1,
+    id: "c294cc8b-a2ec-4b9f-b0a3-8186f2429e0a",
     name: "Timoša",
     createdAt: new Date(2024, 2, 2),
     updatedAt: new Date(2024, 8, 8),
     deleted: true,
   },
   {
-    id: 2,
+    id: "05c76445-c3e6-485c-a786-d3f220133e98",
     name: "Rõzik",
     createdAt: new Date(2024, 8, 9),
     updatedAt: new Date(2024, 9, 9),
     deleted: false,
   },
   {
-    id: 3,
+    id: "850591d8-a6e8-47a2-aca8-e43bb0e8516c",
     name: "Benji",
     createdAt: new Date(2024, 9, 10),
     updatedAt: null,
@@ -35,15 +35,19 @@ exports.create = (req, res) => {
 
   cats.push(newCat)
 
+  res.send(newCat)
+
+  /*
   res.send(
     `Lisati uus kass: ${newCat.name}!
     Lisamise aeg: ${new Date(newCat.createdAt).toLocaleDateString()} `,
-  )
+  ) 
+    */
 }
 
 exports.read = (req, res) => {
-  res.send(`Registreeritud kassid:
-    ${cats.map(c => c.name).join(", ")}`)
+  //res.send(`Registreeritud kassid: ${cats.map(cat => <li>{JSON.stringify(cat)}</li>)}`)
+  res.send(cats)
 }
 
 exports.update = (req, res) => {
@@ -59,10 +63,14 @@ exports.update = (req, res) => {
       updatedAt: Date.now(),
     }
 
+    res.send(cats[indeks])
+
+    /* 
     res.send(`Kassi nimi muudetud!
         Nimi enne: ${eelminenimi}
         Nimi nüüd: ${cats[indeks].name}
-        Muutmise aeg: ${new Date(cats[indeks].updatedAt).toLocaleDateString()}`)
+        Muutmise aeg: ${new Date(cats[indeks].updatedAt).toLocaleDateString()}`) 
+        */
   } else {
     res.send(`Kassi ei leitud!`)
   }
@@ -80,7 +88,8 @@ exports.delete = (req, res) => {
       deleted: true,
     }
 
-    res.send(`Kassi ${nimi} andmed kustutatud!`)
+    res.send(cats[indeks])
+    //res.send(`Kassi ${nimi} andmed kustutatud!`)
   } else {
     res.send(`Kassi ei leitud!`)
   }

@@ -1,6 +1,9 @@
 const express = require("express")
+const cors = require("cors")
 const app = express()
 const port = 8080
+
+app.use(cors())
 
 const catsRoutes = require("./routes/cats.routes")
 const exampleRoutes = require("./routes/example.routes")
