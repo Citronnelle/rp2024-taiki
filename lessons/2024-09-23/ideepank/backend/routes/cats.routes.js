@@ -10,8 +10,8 @@ router.use(catsRouteMiddleware)
 
 // /cats/ Get endpoint level middleware
 router.get("/", catsGetRouteMiddleware, catsController.read)
-router.post("/:name", catsController.create)
-router.put("/:name", catsController.update)
-router.delete("/:name", catsController.delete)
+router.post("/", catsController.create)
+router.put("/", catsController.update)
+router.delete("/", catsController.delete)
 
 module.exports = router
