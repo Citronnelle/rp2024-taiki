@@ -25,6 +25,10 @@ const cats = [
 exports.create = (req, res) => {
   const { name } = req.body
 
+  if (!name || name === "") {
+    return res.status()
+  }
+
   const newCat = {
     id: crypto.randomUUID(),
     name: name,
@@ -36,22 +40,18 @@ exports.create = (req, res) => {
   cats.push(newCat)
 
   res.send(newCat)
-
-  /*
-  res.send(
-    `Lisati uus kass: ${newCat.name}!
-    Lisamise aeg: ${new Date(newCat.createdAt).toLocaleDateString()} `,
-  ) 
-    */
 }
 
 exports.read = (req, res) => {
-  //res.send(`Registreeritud kassid: ${cats.map(cat => <li>{JSON.stringify(cat)}</li>)}`)
   res.send(cats)
 }
 
 exports.update = (req, res) => {
   const { id, name } = req.body
+
+  if (!id || id === "" || !name || name === "") {
+    return res.status()
+  }
 
   let indeks = cats.findIndex(i => i.id == id)
 
@@ -64,20 +64,17 @@ exports.update = (req, res) => {
     }
 
     res.send(cats[indeks])
-
-    /* 
-    res.send(`Kassi nimi muudetud!
-        Nimi enne: ${eelminenimi}
-        Nimi nüüd: ${cats[indeks].name}
-        Muutmise aeg: ${new Date(cats[indeks].updatedAt).toLocaleDateString()}`) 
-        */
-  } else {
-    res.send(`Kassi ei leitud!`)
   }
+
+  res.send(null)
 }
 
 exports.delete = (req, res) => {
   const { id } = req.body
+
+  if (!id || id === "") {
+    return res.status()
+  }
 
   let indeks = cats.findIndex(i => i.id == id)
 
@@ -89,8 +86,7 @@ exports.delete = (req, res) => {
     }
 
     res.send(cats[indeks])
-    //res.send(`Kassi ${nimi} andmed kustutatud!`)
-  } else {
-    res.send(`Kassi ei leitud!`)
   }
+
+  res.send(null)
 }
