@@ -1,39 +1,62 @@
 import React, { useState } from "react"
-import { Alert, Box, Button, Snackbar, Stack, TextField } from "@mui/material"
+import { Box, Button, Stack, TextField } from "@mui/material"
+import NotificationSnackbar from "./NotificationSnackbar"
+import { Cat } from "./Cats"
 
-type KassiLisamine = { uuendaKassid: () => void }
+type KassiLisamineMuutmine = {
+  uuendaKassid: () => void
+  kassiNimi: string
+  maaraKassiNimi: (value: string) => void
+  muudetavKass: Cat | null
+  maaraMuudetavKass: (value: Cat | null) => void
+}
 
-const SubmitCat = ({ uuendaKassid }: KassiLisamine) => {
-  const [nimi, maaraNimi] = useState("")
+const SubmitCat = ({
+  uuendaKassid,
+  kassiNimi,
+  maaraKassiNimi,
+  muudetavKass,
+  maaraMuudetavKass,
+}: KassiLisamineMuutmine) => {
   const [teateRibaAvatud, lylitaTeateRiba] = useState(false)
   const [teade, maaraTeade] = useState("")
-  const [teateTyyp, maaraTeateTyyp] = useState<"success" | "error">("success") // Värvi ja liigi
+  const [teateTyyp, maaraTeateTyyp] = useState<"success" | "error">("success")
 
-  const sisestaKass = async () => {
+  const sisestaVoiMuudaKass = async () => {
     try {
+      const meetod = muudetavKass ? "PUT" : "POST"
       const response = await fetch("http://localhost:8080/cats", {
-        method: "POST",
+        method: meetod,
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ nimi: nimi }),
+        body: JSON.stringify({
+          id: muudetavKass ? muudetavKass.id : undefined,
+          nimi: kassiNimi,
+        }),
       })
 
       if (response.ok) {
         console.log("Õnnestus!", response)
 
-        maaraTeade("Kassi lisamine õnnestus!")
+        maaraTeade(`Kassi ${muudetavKass ? `muutmine` : `lisamine`} õnnestus!`)
         maaraTeateTyyp("success")
         lylitaTeateRiba(true)
 
-        maaraNimi("")
+        maaraKassiNimi("")
+
+        if (muudetavKass) {
+          maaraMuudetavKass(null)
+        }
 
         uuendaKassid()
       } else {
         console.warn("Ebaõnnestus!")
 
-        maaraTeade("Kassi lisamine ebaõnnestus!")
+        maaraTeade(
+          `Kassi  ${muudetavKass ? `muutmine` : `lisamine`}  ebaõnnestus!`,
+        )
         maaraTeateTyyp("error")
         lylitaTeateRiba(true)
       }
@@ -46,10 +69,10 @@ const SubmitCat = ({ uuendaKassid }: KassiLisamine) => {
     }
   }
 
-  const tootlePostitust = (event: React.FormEvent) => {
+  const lisaVoiMuudaKass = (event: React.FormEvent) => {
     event.preventDefault()
 
-    sisestaKass()
+    sisestaVoiMuudaKass()
     setTimeout(uuendaKassid, 100)
   }
 
@@ -62,32 +85,24 @@ const SubmitCat = ({ uuendaKassid }: KassiLisamine) => {
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Snackbar
-          open={teateRibaAvatud}
-          autoHideDuration={6000}
+        <NotificationSnackbar
+          teateRibaAvatud={teateRibaAvatud}
+          teade={teade}
+          teateTyyp={teateTyyp}
           onClose={sulgeTeateRiba}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert
-            onClose={sulgeTeateRiba}
-            severity={teateTyyp}
-            sx={{ width: "100%" }}
-          >
-            {teade}
-          </Alert>
-        </Snackbar>
-        <form onSubmit={tootlePostitust}>
+        />
+        <form onSubmit={lisaVoiMuudaKass}>
           <Stack>
             <TextField
               label="Kassi nimi"
-              value={nimi}
-              onChange={event => maaraNimi(event.target.value)}
+              value={kassiNimi}
+              onChange={event => maaraKassiNimi(event.target.value)}
             ></TextField>
             <Button
               type="submit"
-              disabled={!nimi}
+              disabled={!kassiNimi}
             >
-              Lisa
+              {muudetavKass ? "Muuda" : "Lisa"}
             </Button>
           </Stack>
         </form>

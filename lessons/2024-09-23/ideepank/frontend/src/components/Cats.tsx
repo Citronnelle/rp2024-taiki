@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {
   Box,
+  Button,
   Paper,
   Table,
   TableBody,
@@ -11,8 +12,9 @@ import {
   Typography,
 } from "@mui/material"
 import SubmitCat from "./SubmitCat"
+import RemoveCat from "./RemoveCat"
 
-type Cat = {
+export type Cat = {
   id: string
   name: string
   createdAt: number
@@ -22,12 +24,19 @@ type Cat = {
 
 const Cats = () => {
   const [kassid, maaraKassid] = useState<Cat[]>([])
+  const [muudetavKass, maaraMuudetavKass] = useState<Cat | null>(null)
+  const [kassiNimi, maaraKassiNimi] = useState<string>("")
 
   const kysiKassid = async () => {
     const response = await fetch("http://localhost:8080/cats")
     const data = await response.json()
 
     maaraKassid(data)
+  }
+
+  const muudaKassi = (kass: Cat) => {
+    maaraMuudetavKass(kass)
+    maaraKassiNimi(kass.name)
   }
 
   const headerCellStyle = {
@@ -56,6 +65,7 @@ const Cats = () => {
                   <TableCell sx={headerCellStyle}>Nimi</TableCell>
                   <TableCell sx={headerCellStyle}>Lisatud</TableCell>
                   <TableCell sx={headerCellStyle}>Muudetud</TableCell>
+                  <TableCell sx={headerCellStyle}>Tegevused</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -70,6 +80,13 @@ const Cats = () => {
                         ? new Date(kass.updatedAt).toLocaleString()
                         : new Date(kass.createdAt).toLocaleString()}
                     </TableCell>
+                    <TableCell>
+                      <Button onClick={() => muudaKassi(kass)}>Muuda</Button>
+                      <RemoveCat
+                        uuendaKassid={kysiKassid}
+                        eemaldatavKass={kass}
+                      />
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -77,7 +94,13 @@ const Cats = () => {
           </TableContainer>
         </Paper>
         <Box sx={{ pt: 4 }}>
-          <SubmitCat uuendaKassid={kysiKassid} />
+          <SubmitCat
+            uuendaKassid={kysiKassid}
+            kassiNimi={kassiNimi}
+            maaraKassiNimi={maaraKassiNimi}
+            muudetavKass={muudetavKass}
+            maaraMuudetavKass={maaraMuudetavKass}
+          />
         </Box>
       </Box>
     </Box>
