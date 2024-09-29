@@ -1,10 +1,13 @@
 import React, { useState } from "react"
-import { Box, Button, Stack, TextField } from "@mui/material"
+import { Alert, Box, Button, Snackbar, Stack, TextField } from "@mui/material"
 
-type SisestaKassiAndmed = { fetchCats: () => void }
+type KassiLisamine = { uuendaKassid: () => void }
 
-const SubmitCat = ({ fetchCats }: SisestaKassiAndmed) => {
+const SubmitCat = ({ uuendaKassid }: KassiLisamine) => {
   const [nimi, maaraNimi] = useState("")
+  const [teateRibaAvatud, lylitaTeateRiba] = useState(false)
+  const [teade, maaraTeade] = useState("")
+  const [teateTyyp, maaraTeateTyyp] = useState<"success" | "error">("success") // Värvi ja liigi
 
   const sisestaKass = async () => {
     try {
@@ -20,14 +23,26 @@ const SubmitCat = ({ fetchCats }: SisestaKassiAndmed) => {
       if (response.ok) {
         console.log("Õnnestus!", response)
 
-        // Snackbar +
+        maaraTeade("Kassi lisamine õnnestus!")
+        maaraTeateTyyp("success")
+        lylitaTeateRiba(true)
+
+        maaraNimi("")
+
+        uuendaKassid()
       } else {
         console.warn("Ebaõnnestus!")
 
-        // Snackbar -
+        maaraTeade("Kassi lisamine ebaõnnestus!")
+        maaraTeateTyyp("error")
+        lylitaTeateRiba(true)
       }
     } catch (viga) {
       console.warn(viga)
+
+      maaraTeade("Tekkis viga!")
+      maaraTeateTyyp("error")
+      lylitaTeateRiba(true)
     }
   }
 
@@ -35,23 +50,49 @@ const SubmitCat = ({ fetchCats }: SisestaKassiAndmed) => {
     event.preventDefault()
 
     sisestaKass()
-    setTimeout(fetchCats, 100)
+    setTimeout(uuendaKassid, 100)
+  }
+
+  const sulgeTeateRiba = () => {
+    lylitaTeateRiba(false)
   }
 
   return (
-    <Box
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
-      <form onSubmit={tootlePostitust}>
-        <Stack>
-          <TextField
-            label="Kassi nimi"
-            onChange={event => maaraNimi(event.target.value)}
-          ></TextField>
-          <Button type="submit">Lisa</Button>
-        </Stack>
-      </form>
-    </Box>
+    <>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <Snackbar
+          open={teateRibaAvatud}
+          autoHideDuration={6000}
+          onClose={sulgeTeateRiba}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert
+            onClose={sulgeTeateRiba}
+            severity={teateTyyp}
+            sx={{ width: "100%" }}
+          >
+            {teade}
+          </Alert>
+        </Snackbar>
+        <form onSubmit={tootlePostitust}>
+          <Stack>
+            <TextField
+              label="Kassi nimi"
+              value={nimi}
+              onChange={event => maaraNimi(event.target.value)}
+            ></TextField>
+            <Button
+              type="submit"
+              disabled={!nimi}
+            >
+              Lisa
+            </Button>
+          </Stack>
+        </form>
+      </Box>
+    </>
   )
 }
 
