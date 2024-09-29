@@ -8,4 +8,6 @@ const catsGetRouteMiddleware = (req, res, next) => {
   next()
 }
 
+//TODO: Add validation and/or logging?
+
 module.exports = { catsRouteMiddleware, catsGetRouteMiddleware }
