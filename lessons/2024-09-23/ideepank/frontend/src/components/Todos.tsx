@@ -62,62 +62,66 @@ const Todos = () => {
   return (
     <Box sx={{ padding: 2, marginTop: 2, maxWidth: "100%" }}>
       <Box sx={{ maxWidth: "80%", margin: "auto" }}>
-        <Typography
-          variant="h3"
-          sx={{ mb: 2 }}
-        >
-          TODOs
-        </Typography>
-        <Paper sx={{ maxWidth: "100%" }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={headerCellStyle}>Pealkiri</TableCell>
-                  <TableCell sx={headerCellStyle}>Prioriteet</TableCell>
-                  <TableCell sx={headerCellStyle}>Lisatud</TableCell>
-                  <TableCell sx={headerCellStyle}>Muudetud</TableCell>
-                  <TableCell sx={{ ...headerCellStyle, ...centeredCellStyle }}>
-                    Tegevused
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {todos.map(todo => (
-                  <TableRow key={todo.id}>
-                    <TableCell sx={boldCellStyle}>{todo.title}</TableCell>
-                    <TableCell sx={boldCellStyle}>{todo.priority}</TableCell>
-                    <TableCell>
-                      {new Date(todo.createdAt).toLocaleString()}
-                    </TableCell>
-                    <TableCell>
-                      {todo.updatedAt
-                        ? new Date(todo.updatedAt).toLocaleString()
-                        : new Date(todo.createdAt).toLocaleString()}
-                    </TableCell>
-                    <TableCell sx={centeredCellStyle}>
-                      <Button onClick={() => editTodo(todo)}>Muuda</Button>
-                      <DeleteTodo
-                        getTodos={getTodos}
-                        deletableTodo={todo}
-                      />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Typography
+            variant="h3"
+            sx={{ mb: 2 }}
+          >
+            TODO
+          </Typography>
+          <Paper sx={{ maxWidth: "100%" }}>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={headerCellStyle}>Pealkiri</TableCell>
+                    <TableCell sx={headerCellStyle}>Prioriteet</TableCell>
+                    <TableCell sx={headerCellStyle}>Lisatud</TableCell>
+                    <TableCell sx={headerCellStyle}>Muudetud</TableCell>
+                    <TableCell
+                      sx={{ ...headerCellStyle, ...centeredCellStyle }}
+                    >
+                      Tegevused
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        <Box sx={{ pt: 4 }}>
-          <CreateEditTodo
-            getTodos={getTodos}
-            todoTitle={todoTitle}
-            todoPriority={todoPriority}
-            editableTodo={editableTodo}
-            setTodoTitle={setTodoTitle}
-            setTodoPriority={setTodoPriority}
-            setEditableTodo={setEditableTodo}
-          />
+                </TableHead>
+                <TableBody>
+                  {todos.map(todo => (
+                    <TableRow key={todo.id}>
+                      <TableCell sx={boldCellStyle}>{todo.title}</TableCell>
+                      <TableCell sx={boldCellStyle}>{todo.priority}</TableCell>
+                      <TableCell>
+                        {new Date(todo.createdAt).toLocaleString()}
+                      </TableCell>
+                      <TableCell>
+                        {todo.updatedAt
+                          ? new Date(todo.updatedAt).toLocaleString()
+                          : new Date(todo.createdAt).toLocaleString()}
+                      </TableCell>
+                      <TableCell sx={centeredCellStyle}>
+                        <Button onClick={() => editTodo(todo)}>Muuda</Button>
+                        <DeleteTodo
+                          getTodos={getTodos}
+                          deletableTodo={todo}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+          <Box sx={{ pt: 4 }}>
+            <CreateEditTodo
+              getTodos={getTodos}
+              todoTitle={todoTitle}
+              todoPriority={todoPriority}
+              editableTodo={editableTodo}
+              setTodoTitle={setTodoTitle}
+              setTodoPriority={setTodoPriority}
+              setEditableTodo={setEditableTodo}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>

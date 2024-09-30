@@ -92,7 +92,7 @@ const SubmitCat = ({
           onClose={sulgeTeateRiba}
         />
         <form onSubmit={lisaVoiMuudaKass}>
-          <Stack>
+          <Stack gap={2}>
             <TextField
               label="Kassi nimi"
               value={kassiNimi}

@@ -44,6 +44,14 @@ const Cats = () => {
     fontWeight: "bold",
   }
 
+  const centeredCellStyle = {
+    textAlign: "center",
+  }
+
+  const boldCellStyle = {
+    fontWeight: "bold",
+  }
+
   useEffect(() => {
     kysiKassid()
   }, [])
@@ -51,56 +59,62 @@ const Cats = () => {
   return (
     <Box sx={{ padding: 2, marginTop: 2, maxWidth: "100%" }}>
       <Box sx={{ maxWidth: "80%", margin: "auto" }}>
-        <Typography
-          variant="h3"
-          sx={{ mb: 2 }}
-        >
-          Kassid
-        </Typography>
-        <Paper sx={{ maxWidth: "100%" }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={headerCellStyle}>Nimi</TableCell>
-                  <TableCell sx={headerCellStyle}>Lisatud</TableCell>
-                  <TableCell sx={headerCellStyle}>Muudetud</TableCell>
-                  <TableCell sx={headerCellStyle}>Tegevused</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {kassid.map(kass => (
-                  <TableRow key={kass.id}>
-                    <TableCell>{kass.name}</TableCell>
-                    <TableCell>
-                      {new Date(kass.createdAt).toLocaleString()}
-                    </TableCell>
-                    <TableCell>
-                      {kass.updatedAt
-                        ? new Date(kass.updatedAt).toLocaleString()
-                        : new Date(kass.createdAt).toLocaleString()}
-                    </TableCell>
-                    <TableCell>
-                      <Button onClick={() => muudaKassi(kass)}>Muuda</Button>
-                      <RemoveCat
-                        uuendaKassid={kysiKassid}
-                        eemaldatavKass={kass}
-                      />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Typography
+            variant="h3"
+            sx={{ mb: 2 }}
+          >
+            Kassid
+          </Typography>
+          <Paper sx={{ maxWidth: "100%" }}>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={headerCellStyle}>Nimi</TableCell>
+                    <TableCell sx={headerCellStyle}>Lisatud</TableCell>
+                    <TableCell sx={headerCellStyle}>Muudetud</TableCell>
+                    <TableCell
+                      sx={{ ...headerCellStyle, ...centeredCellStyle }}
+                    >
+                      Tegevused
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        <Box sx={{ pt: 4 }}>
-          <SubmitCat
-            uuendaKassid={kysiKassid}
-            kassiNimi={kassiNimi}
-            maaraKassiNimi={maaraKassiNimi}
-            muudetavKass={muudetavKass}
-            maaraMuudetavKass={maaraMuudetavKass}
-          />
+                </TableHead>
+                <TableBody>
+                  {kassid.map(kass => (
+                    <TableRow key={kass.id}>
+                      <TableCell sx={boldCellStyle}>{kass.name}</TableCell>
+                      <TableCell>
+                        {new Date(kass.createdAt).toLocaleString()}
+                      </TableCell>
+                      <TableCell>
+                        {kass.updatedAt
+                          ? new Date(kass.updatedAt).toLocaleString()
+                          : new Date(kass.createdAt).toLocaleString()}
+                      </TableCell>
+                      <TableCell sx={centeredCellStyle}>
+                        <Button onClick={() => muudaKassi(kass)}>Muuda</Button>
+                        <RemoveCat
+                          uuendaKassid={kysiKassid}
+                          eemaldatavKass={kass}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+          <Box sx={{ pt: 4 }}>
+            <SubmitCat
+              uuendaKassid={kysiKassid}
+              kassiNimi={kassiNimi}
+              maaraKassiNimi={maaraKassiNimi}
+              muudetavKass={muudetavKass}
+              maaraMuudetavKass={maaraMuudetavKass}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>
