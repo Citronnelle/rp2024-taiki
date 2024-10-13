@@ -112,6 +112,7 @@ const CreateEditTodo = ({
             ></TextField>
             <Button
               type="submit"
+              color="primary"
               disabled={!todoTitle || !todoPriority || todoPriority === 0}
             >
               {editableTodo ? "Muuda" : "Lisa"}
