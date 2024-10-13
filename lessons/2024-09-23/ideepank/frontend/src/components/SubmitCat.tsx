@@ -101,6 +101,7 @@ const SubmitCat = ({
             ></TextField>
             <Button
               type="submit"
+              color="primary"
               disabled={!kassiNimi}
             >
               {muudetavKass ? "Muuda" : "Lisa"}
