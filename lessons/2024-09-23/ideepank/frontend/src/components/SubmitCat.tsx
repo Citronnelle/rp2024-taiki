@@ -69,11 +69,12 @@ const SubmitCat = ({
     }
   }
 
-  const lisaVoiMuudaKass = (event: React.FormEvent) => {
+  const lisaVoiMuudaKass = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    sisestaVoiMuudaKass()
-    setTimeout(uuendaKassid, 100)
+    await sisestaVoiMuudaKass()
+    uuendaKassid()
+    //setTimeout(uuendaKassid, 100)
   }
 
   const sulgeTeateRiba = () => {
